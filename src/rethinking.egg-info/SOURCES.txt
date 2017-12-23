@@ -1,7 +1,0 @@
-README.rst
-rethinking/__init__.py
-rethinking/utils.py
-rethinking.egg-info/PKG-INFO
-rethinking.egg-info/SOURCES.txt
-rethinking.egg-info/dependency_links.txt
-rethinking.egg-info/top_level.txt
