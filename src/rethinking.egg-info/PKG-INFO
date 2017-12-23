@@ -1,0 +1,13 @@
+Metadata-Version: 1.0
+Name: rethinking
+Version: 0.0.1
+Summary: Utilities for efficient bayesian inference
+Home-page: UNKNOWN
+Author: UNKNOWN
+Author-email: UNKNOWN
+License: UNKNOWN
+Description: # Rethinking
+        
+        Set of utilities for efficiently conducting bayesian inference using `pystan`.
+        
+Platform: UNKNOWN
