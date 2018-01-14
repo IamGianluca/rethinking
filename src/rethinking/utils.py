@@ -21,3 +21,30 @@ def hpdi(samples, prob):
         hdi_min = sorted_points[ci_width.index(min(ci_width))]
         hdi_max = sorted_points[ci_width.index(min(ci_width)) + ci_idx_inc]
     return hdi_min, hdi_max
+
+
+def information_entropy(p):
+    """Information entropy.
+    
+    Args:
+        p (np.array): array of relative probability of each event
+    
+    Returns:
+        float: the information entropy
+    """
+    non_zero = p > 0
+    p = p[non_zero]
+    return - np.sum(p * np.log(p))
+
+
+def kl_divergence(p, q):
+    """Kullback-Leibler divergence.
+    
+    Args:
+        p (np.array): target probability
+        q (np.array): model probability
+    
+    Returns:
+        float: the average difference in log probability between the
+            target (p) and model (q)."""
+    return np.sum(p * (np.log(p) - np.log(q)))
