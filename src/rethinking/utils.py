@@ -25,10 +25,10 @@ def hpdi(samples, prob):
 
 def information_entropy(p):
     """Information entropy.
-    
+
     Args:
         p (np.array): array of relative probability of each event
-    
+
     Returns:
         float: the information entropy
     """
@@ -39,12 +39,37 @@ def information_entropy(p):
 
 def kl_divergence(p, q):
     """Kullback-Leibler divergence.
-    
+
     Args:
         p (np.array): target probability
         q (np.array): model probability
-    
+
     Returns:
         float: the average difference in log probability between the
-            target (p) and model (q)."""
+            target (p) and model (q)
+    """
     return np.sum(p * (np.log(p) - np.log(q)))
+
+
+def log_likelihood(q):
+    """Log-likelihood.
+
+    Args:
+        q (np.array): the likelihood of each observation.
+
+    Returns:
+        float: the log-likelihood of the model q.
+    """
+    return np.sum(np.log(q))
+
+
+def deviance(q):
+    """Deviance. A relative measure of model fit.
+
+    Args:
+        q (np.array): first alternative model
+
+    Returns:
+        float: approximate of the relative value of E(log(q_i))
+    """
+    return -2 * log_likelihood(q)
