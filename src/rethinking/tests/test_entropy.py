@@ -2,8 +2,7 @@ import numpy as np
 import pytest
 from pytest import approx
 
-from rethinking.utils import (
-    information_entropy, kl_divergence)                              
+from rethinking.utils import information_entropy, kl_divergence
 
 
 @pytest.mark.parametrize('p,expected', [
