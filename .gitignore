@@ -6,3 +6,6 @@
 
 # pytest cache
 .cache
+
+# stancache
+cache

@@ -34,7 +34,7 @@ def information_entropy(p):
     """
     non_zero = p > 0
     p = p[non_zero]
-    return -(np.sum(p * np.log(p)))
+    return - np.sum(p * np.log(p))
 
 
 def kl_divergence(p, q):
