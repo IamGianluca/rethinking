@@ -4,8 +4,9 @@
 # jupyter notebook checkpoints
 .ipynb_checkpoints
 
-# pytest cache
+# pytest and coverage cache
 .cache
+.coverage
 
 # stancache
 cache

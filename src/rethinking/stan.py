@@ -9,8 +9,7 @@ import pystan
 logger = logging.getLogger(__name__)
 
 
-CACHE_PATH = os.environ['PYSTAN_CACHE_PATH']
-MODEL_PATH = os.environ['PYSTAN_MODEL_PATH']
+CACHE_PATH = '/tmp/'
 
 
 class StanCache:
@@ -21,29 +20,27 @@ class StanCache:
     updated. If so, a recompilation is necessary.
 
     Args:
-        model_name (str): The name of the Stan file, without the file
-            extension.
+        filename (str): The full path to the Stan program.
     """
-    def __init__(self, model_name):
-        self.model_name = model_name
+    def __init__(self, filename):
+        self.filename = filename
+        self.model_name = os.path.basename(filename)
 
-        self.program_name = f'{model_name}.stan'
-        self.program_path = os.path.join(MODEL_PATH, self.program_name)
         self._version_hash = None
         self.cache_program_path = os.path.join(
-            CACHE_PATH, f'cache-{model_name}-program-{self.version_hash}.pkl')
+            CACHE_PATH, f'cache-{self.model_name}-program-{self.version_hash}.pkl')
         self.cache_fit_path = os.path.join(
-            CACHE_PATH, f'cache_{model_name}-fit-{self.version_hash}.pkl')
+            CACHE_PATH, f'cache_{self.model_name}-fit-{self.version_hash}.pkl')
 
     @property
     def model_code(self):
-        with open(self.program_path, 'r') as f:
+        with open(self.filename, 'r') as f:
             print(f.read())
 
     @property
     def version_hash(self):
         """Hash timestamp of latest update of Stan program."""
-        update_timestamp = str(os.path.getmtime(self.program_path))
+        update_timestamp = str(os.path.getmtime(self.filename))
         return md5(update_timestamp.encode('ascii')).hexdigest()
 
     def compile(self):
@@ -55,7 +52,7 @@ class StanCache:
                 sm = pickle.load(cached_program)
         except:
             logging.debug('Compiling Stan program...')
-            sm = pystan.StanModel(file=self.program_path)
+            sm = pystan.StanModel(file=self.filename)
             logging.debug('Caching model for future reuse...')
             with open(self.cache_program_path, 'wb') as f:
                 pickle.dump(sm, f)
