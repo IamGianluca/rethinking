@@ -45,4 +45,5 @@ def summaryplot(fit, pars=None, percentile_interval=(5, 95), debug=False):
     p.title.align = 'center'
     p.segment(x0=min_p, y0=factors, x1=max_p, y1=factors)
     p.circle(medians, factors, fill_color='blue', line_color='blue', alpha=.35, line_width=3)
+    p.line(x=(0, 0), y=(0, factors[0]), line_dash='dashed')
     show(p)
