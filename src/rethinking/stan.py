@@ -28,7 +28,8 @@ class StanCache:
 
         self._version_hash = None
         self.cache_program_path = os.path.join(
-            CACHE_PATH, f'cache-{self.model_name}-program-{self.version_hash}.pkl')
+            CACHE_PATH,
+            f'cache-{self.model_name}-program-{self.version_hash}.pkl')
         self.cache_fit_path = os.path.join(
             CACHE_PATH, f'cache_{self.model_name}-fit-{self.version_hash}.pkl')
 
@@ -50,7 +51,7 @@ class StanCache:
         try:
             with open(self.cache_program_path, 'rb') as cached_program:
                 sm = pickle.load(cached_program)
-        except:
+        except FileNotFoundError:
             logging.debug('Compiling Stan program...')
             sm = pystan.StanModel(file=self.filename)
             logging.debug('Caching model for future reuse...')
@@ -86,7 +87,8 @@ class StanCache:
                     fit = self.sm.sampling(data=data, **kwargs)
                 except AttributeError:
                     logging.error('Stan program has not been compiled yet. '
-                                  'Please execute the `compile()` method before using `sampling()`.')
+                                  'Please execute the `compile()` method '
+                                  'before using `sampling()`.')
                 with open(self.cache_fit_path, 'wb') as f:
                     results = dict(data=data, kwargs=kwargs, fit=fit)
                     if cache:
