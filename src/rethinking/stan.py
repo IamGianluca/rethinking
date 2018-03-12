@@ -9,9 +9,6 @@ import pystan
 logger = logging.getLogger(__name__)
 
 
-CACHE_PATH = '/tmp/'
-
-
 class StanCache:
     """Reuse serialized model if found, else compile it and serialize it for
     future reuse.
@@ -21,17 +18,19 @@ class StanCache:
 
     Args:
         filename (str): The full path to the Stan program.
+        cache_path (str): Location for cache.
     """
-    def __init__(self, filename):
+    def __init__(self, filename, cache_path):
         self.filename = filename
         self.model_name = os.path.basename(filename)
 
         self._version_hash = None
         self.cache_program_path = os.path.join(
-            CACHE_PATH,
+            cache_path,
             f'cache-{self.model_name}-program-{self.version_hash}.pkl')
         self.cache_fit_path = os.path.join(
-            CACHE_PATH, f'cache_{self.model_name}-fit-{self.version_hash}.pkl')
+            cache_path,
+            f'cache_{self.model_name}-fit-{self.version_hash}.pkl')
 
     @property
     def model_code(self):
