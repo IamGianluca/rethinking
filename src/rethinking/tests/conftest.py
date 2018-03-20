@@ -5,7 +5,10 @@ from rethinking.stan import StanCache
 
 @pytest.fixture
 def stancache():
-    return StanCache(filename='./src/rethinking/tests/test_program.stan')
+    return StanCache(
+        filename='./src/rethinking/tests/test_program.stan',
+        cache_path='src/rethinking/tests/cache',
+    )
 
 
 @pytest.fixture
